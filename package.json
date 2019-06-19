@@ -7,6 +7,10 @@
   "bin": {
     "vuepress": "./bin/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaijiaLin/vuepress-kj"
+  },
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks test/",
     "test-cli": "mocha --reporter spec --check-leaks test/",
