@@ -40,7 +40,7 @@ program
     .command('create [dir]')
     .description('init vuepress at the given dirname')
     .action((dir, option) => {
-        dirPath = (dir.indexOf('./') === -1 ? `./${dir}` : dir);
+        dirPath = dir && (dir.indexOf('./') === -1 ? `./${dir}` : dir);
     })
 
 program.parse(process.argv)
