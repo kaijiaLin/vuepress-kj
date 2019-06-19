@@ -1,0 +1,29 @@
+{
+  "name": "init",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "npx vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "deploy": "gh-pages -d dist",
+    "deploy:build": "npm run docs:build && gh-pages -d dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "Prism": "^2.0.0",
+    "gh-pages": "^2.0.0",
+    "mathsass": "^0.10.1",
+    "node-sass": "^4.9.3",
+    "prismjs": "^1.16.0",
+    "sass-loader": "^7.1.0",
+    "scss-loader": "^0.0.1",
+    "vuepress": "^0.14.4"
+  },
+  "dependencies": {
+    "gitalk": "^1.5.0",
+    "live2d-widget": "^3.1.4",
+    "markdown-it-include": "^1.0.0"
+  }
+}

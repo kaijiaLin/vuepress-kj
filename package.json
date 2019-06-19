@@ -1,0 +1,32 @@
+{
+  "name": "vuepress-kj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "description": "快速构建你的VuePress应用的脚手架",
+  "bin": {
+    "vuepress": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec --bail --check-leaks test/",
+    "test-cli": "mocha --reporter spec --check-leaks test/",
+    "start": "npm publish ."
+  },
+  "keywords": ["vuepress-cli"],
+  "author": "kaijiaLin",
+  "license": "MIT",
+  "devDependencies": {
+    "commander": "^2.20.0",
+    "mkdirp": "^0.5.1",
+    "mocha": "^6.1.4",
+    "rimraf": "^2.6.3",
+    "sorted-object": "^2.0.1",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "inquirer": "^6.3.1",
+    "markdown-it-imsize": "2.0.1",
+    "markdown-it-task-lists": "^2.1.1"
+  }
+}
