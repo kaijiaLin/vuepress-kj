@@ -1,6 +1,6 @@
 {
   "name": "vuepress-kj",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "快速构建你的VuePress应用的脚手架",
   "main": "index.js",
   "bin": {
