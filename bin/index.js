@@ -223,7 +223,7 @@ function createApplication(app_name, path) {
         write(path + '/package.json', JSON.stringify(pkg, null, 2));
 
         // .gitignore
-        write(path + '/.gitignore', fs.readFileSync(__dirname + '/../template/.gitignore', 'utf-8'));
+        write(path + '/.gitignore', fs.readFileSync(__dirname + '/../template/gitignore', 'utf-8'));
 
         complete();
     });
