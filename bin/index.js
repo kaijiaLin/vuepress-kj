@@ -18,9 +18,10 @@ const chalk = require('chalk')
 const version = pkg.version
 
 // 传入的路径
-let dirPath = ''
-let githubUsername = ''
-let repoName = ''
+let dirPath = '',
+    githubUsername = '',
+    repoName = '',
+    isBlog = false
 
 // 重新分配exit
 process.exit = exit
@@ -64,7 +65,7 @@ function before(obj, method, fn) {
  */
 
 function createApplication(app_name, path) {
-    let wait = 7;
+    let wait = isBlog ? 8 : 7;
 
     console.log();
 
@@ -78,64 +79,135 @@ function createApplication(app_name, path) {
         console.log();
         console.log('   run the vuepress:');
         console.log();
-        console.log(chalk.green('\t\tnpm run docs:dev'));
+        if (isBlog) {
+            console.log(chalk.red('\tyou should install vuepress globally, and then run: '));
+            console.log();
+            console.log(chalk.green.bold('\t\tvupress dev docs'))
+            console.log();
+            console.log('For details, please visit https://github.com/kaijiaLin/vuepress-kj')
+        } else {
+            console.log(chalk.green.bold('\t\tnpm run docs:dev'));
+        }
 
         console.log();
     }
 
     // JavaScript
-    // let config = loadTemplate('docs/.vuepress/config.js');
-    let config = `module.exports = {
-                    title: 'Title',
-                    description: 'description',
-                    head: [
-                        ['link', { rel: 'icon', href: '/favicon.ico' }]
-                    ],
-                    base: '/${repoName}/',
-                    repo: 'https://github.com/${githubUsername}/${repoName}',
-                    dest: './docs/.vuepress/dist',
-                    ga: '',
-                    serviceWorker: true,
-                    evergreen: true,
-                    themeConfig: {
-                        // background: '/images/',
-                        // logo: '/images/logo.png',
-                        // accentColor: '#ac3e40',
-                        github: 'https://github.com/${githubUsername}/${repoName}',
-                        per_page: 6,
-                        date_format: 'yyyy-MM-dd HH:mm:ss',
+    let config = '';
 
-                        // 设置顶部导航栏
-                        nav: [
-                            { text: '导航', link: '链接' }
-                        ],
+    if (isBlog) {
+        config = `module.exports = {
+            title: 'Title',
+            description: 'description',
+            theme: 'yubisaki',
+            head: [
+                ['link', { rel: 'icon', href: '/favicon.ico' }]
+            ],
+            base: '/${repoName}/',
+            repo: 'https://github.com/${githubUsername}/${repoName}',
+            dest: './docs/.vuepress/dist',
+            ga: '',
+            serviceWorker: true,
+            evergreen: true,
+            themeConfig: {
+                background: '/img/',
+                logo: '/images/logo.png',
+                accentColor: '#ac3e40',
+                // footer: '', // 显示在博客的 footer 中
 
-                        sidebar: [{
-                            title: "sidebar",
-                            collapsable: true,
-                            children: [
-                                ["/post/", "post"]
-                            ]
-                        }]
-                    },
-                    markdown: {
-                        lineNumbers: true, // 代码块显示行数
-                        anchor: {
-                            permalink: true
-                        },
-                        toc: {
-                            includeLevel: [1, 2]
-                        },
-                        config: md => {
-                            // 使用更多 markdown-it 插件
-                            md.use(require('markdown-it-task-lists'))
-                                .use(require('markdown-it-imsize'), { autofill: true })
-                        }
-                    },
-                    postcss: {
-                        plugins: [require('autoprefixer')]
-                    },
-                }`
+                // 是否显示文章的最近更新时间
+                lastUpdated: true,
+                github: '${githubUsername}',
+                per_page: 6,
+                date_format: 'yyyy-MM-dd HH:mm:ss',
+
+                // 设置顶部导航栏
+                nav: [
+                    {text: 'Home', link: '/'},
+                    { text: 'TAGS', link: '/tag/' },
+                    {text: 'About', link: '/about/'},
+                    {text: 'Github', link: 'https://github.com/${githubUsername}'},
+                ],
+
+                // 评论功能
+                comment: {
+                    clientId: '<GitHub Application Client ID>',
+                    clientSecret: '<GitHub Application Client Secret>',
+                    repo: '${repoName}',
+                    owner: '${githubUsername}',
+                    perPage: 5,
+                    locale: 'zh-CN',
+                }
+            },
+            markdown: {
+                lineNumbers: true, // 代码块显示行数
+                anchor: {
+                    permalink: true
+                },
+                toc: {
+                    includeLevel: [1, 2]
+                },
+                config: md => {
+                    // 使用更多 markdown-it 插件
+                    md.use(require('markdown-it-task-lists'))
+                        .use(require('markdown-it-imsize'), { autofill: true })
+                }
+            },
+            postcss: {
+                plugins: [require('autoprefixer')]
+            },
+        }`
+    } else {
+        config = `module.exports = {
+            title: 'Title',
+            description: 'description',
+            head: [
+                ['link', { rel: 'icon', href: '/favicon.ico' }]
+            ],
+            base: '/${repoName}/',
+            repo: 'https://github.com/${githubUsername}/${repoName}',
+            dest: './docs/.vuepress/dist',
+            ga: '',
+            serviceWorker: true,
+            evergreen: true,
+            themeConfig: {
+                github: '${githubUsername}',
+                per_page: 6,
+                date_format: 'yyyy-MM-dd HH:mm:ss',
+
+                // 设置顶部导航栏
+                nav: [
+                    { text: '导航', link: '链接' }
+                ],
+
+                sidebar: [{
+                    title: "sidebar",
+                    collapsable: true,
+                    children: [
+                        ["/posts/", "posts"]
+                    ]
+                }]
+            },
+            markdown: {
+                lineNumbers: true, // 代码块显示行数
+                anchor: {
+                    permalink: true
+                },
+                toc: {
+                    includeLevel: [1, 2]
+                },
+                config: md => {
+                    // 使用更多 markdown-it 插件
+                    md.use(require('markdown-it-task-lists'))
+                        .use(require('markdown-it-imsize'), { autofill: true })
+                }
+            },
+            postcss: {
+                plugins: [require('autoprefixer')]
+            },
+        }`
+    }
+
 
     // Style
     let css = loadTemplate('docs/.vuepress/public/styles/style.css');
@@ -143,7 +215,7 @@ function createApplication(app_name, path) {
 
     // MarkDown
     let readme = loadTemplate('docs/README.md');
-    let index = loadTemplate('docs/post/index.md');
+    let template = loadTemplate('docs/posts/template.md');
 
     // img
     let favicon = loadTemplate('docs/.vuepress/public/favicon.ico');
@@ -152,6 +224,9 @@ function createApplication(app_name, path) {
     mkdir(path, function() {
         mkdir(path + '/docs', function() {
             write(path + '/docs/README.md', readme);
+            if (isBlog) {
+                write(path + '/docs/index.md', '');
+            }
             complete();
         });
         mkdir(path + '/docs/.vuepress', function() {
@@ -172,8 +247,14 @@ function createApplication(app_name, path) {
             complete();
         });
 
-        mkdir(path + '/docs/post', function() {
-            write(path + '/docs/post/index.md', index);
+        mkdir(path + '/docs/posts', function() {
+            write(path + '/docs/posts/index.md', '');
+            isBlog && write(path + '/docs/posts/template.md', template);
+            complete();
+        });
+
+        isBlog && mkdir(path + '/docs/about', function() {
+            write(path + '/docs/about/index.md', '# About me');
             complete();
         });
 
@@ -193,9 +274,11 @@ function createApplication(app_name, path) {
                 "docs:dev": "npx vuepress dev docs",
                 "docs:build": "vuepress build docs",
                 "deploy": "gh-pages -d docs/.vuepress/dist",
-                "deploy:build": "npm run docs:build && gh-pages -d docs/.vuepress/dist"
+                "deploy:build": "npm run docs:build && gh-pages -d docs/.vuepress/dist",
+                "docs:deploy": "npm run docs:build && git add . && git commit -m 'deploy' && git push origin master && npm run deploy",
+                "blog:deploy": "git add . && git commit -m 'deploy' && git push origin master && npm run deploy"
             },
-            author: "",
+            author: `${githubUsername}`,
             license: "MIT",
             devDependencies: {
                 "Prism": "^2.0.0",
@@ -209,10 +292,10 @@ function createApplication(app_name, path) {
             },
             dependencies: {
                 "gitalk": "^1.5.0",
-                "live2d-widget": "^3.1.4",
                 "markdown-it-include": "^1.0.0",
                 "markdown-it-task-lists": "^2.1.1",
-                "markdown-it-imsize": "2.0.1"
+                "markdown-it-imsize": "2.0.1",
+                "vuepress-theme-yubisaki": "^3.1.9"
             }
         }
 
@@ -296,7 +379,7 @@ function main() {
     inquirer
         .prompt([{
             type: 'input',
-            message: chalk.cyan('app name: '),
+            message: chalk.bold('app name: '),
             name: 'name'
         }, {
             type: 'input',
@@ -306,12 +389,16 @@ function main() {
             type: 'input',
             message: chalk.gray('repository name: '),
             name: 'reponame'
+        }, {
+            type: 'confirm',
+            message: chalk.magenta.bold('Do you want to use it as your blog?(default use vuepress-theme-yubisaki) '),
+            name: 'isBlog'
         }])
         .then(answers => {
             answers.name && (appName = answers.name);
             answers.username && (githubUsername = answers.username);
             answers.reponame && (repoName = answers.reponame);
-
+            answers.isBlog && (isBlog = answers.isBlog);
 
             // Path
             let destinationPath = dirPath || '.';

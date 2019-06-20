@@ -4,7 +4,7 @@
   "description": "快速构建你的VuePress应用的脚手架",
   "main": "index.js",
   "bin": {
-    "vuepress": "./bin/index.js"
+    "vuepress-kj": "./bin/index.js"
   },
   "repository": {
     "type": "git",

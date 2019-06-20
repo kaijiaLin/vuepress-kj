@@ -25,6 +25,7 @@
     "gitalk": "^1.5.0",
     "live2d-widget": "^3.1.4",
     "markdown-it-include": "^1.0.0",
-    "markdown-it-task-lists": "^2.1.1"
+    "markdown-it-task-lists": "^2.1.1",
+    "vuepress-theme-yubisaki": "^3.1.9"
   }
 }

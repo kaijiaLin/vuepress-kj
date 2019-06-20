@@ -21,7 +21,7 @@ npm install vuepress-kj -g
 1. create your VuePress app
 
 ```sh
-vuepress create <path>
+vuepress-kj create <path>
 ```
 
 2. install dependencies
@@ -32,31 +32,43 @@ cd <path>
 npm install
 ```
 
-3. add github repository
+3. init git
 
 ```sh
 git init
-git add .
-git commit -m 'initial'
+
 git remote add origin https://github.com/<username>/<repo>.git
 ```
 
 4. generate page and deploy to github page
 
-```sh
-npm run docs:build
-npm run deploy
-```
-
-5. local preview
+- If you choose to it as your blog, you should install vuepress globally
 
 ```sh
-npm run docs:dev
+npm install vuepress -g
+
+vuepress build docs
+
+npm run blog:deploy
+
+vuepress dev docs  # local preview
+```
+
+- otherwise
+
+```sh
+npm run docs:deploy
+
+npm run docs:dev  # local preview
 ```
 
 
 
-> If you want to update, you must first `git` submit and then `npm run deploy`.
+### Links
+
+>  [vuepress-theme-yubisaki](https://wuwaki.me/yubisaki/next.html) 
+>
+> [vuepress](https://vuepress.vuejs.org/zh/guide/basic-config.html#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
 
 
 
