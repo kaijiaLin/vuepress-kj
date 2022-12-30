@@ -21,7 +21,7 @@
   "author": "kaijiaLin",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "rimraf": "^2.6.3",
     "supertest": "^4.0.2"
   },
